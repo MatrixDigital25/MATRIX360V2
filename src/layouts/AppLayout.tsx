@@ -14,6 +14,7 @@ import {
   Search,
   Bell,
   User,
+  Globe,
   ChevronRight,
   Sparkles,
   Menu,
@@ -34,6 +35,7 @@ const mainNavItems: NavItem[] = [
   { title: 'Home', href: '/', icon: Home },
   { title: 'Intelligence Feed', href: '/feed', icon: Rss },
   { title: 'Consultant Network', href: '/consultants', icon: Users },
+  { title: 'Strategic Domains', href: '/industries', icon: Globe },
   { title: 'Strategic Challenges', href: '/challenges', icon: Target },
   { title: 'Projects', href: '/projects', icon: Briefcase },
   { title: 'AI Agents', href: '/ai-agents', icon: BrainCircuit },
@@ -69,7 +71,25 @@ export function AppLayout() {
           </button>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
+        {/* User Profile Summary */}
+        <div className="px-4 mb-4">
+          <div className={cn(
+            "flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10",
+            !isSidebarOpen && "justify-center px-0"
+          )}>
+            <div className="h-10 w-10 rounded-full bg-interaction-primary flex items-center justify-center text-sm font-bold shadow-lg border border-white/20 flex-shrink-0">
+              JD
+            </div>
+            {isSidebarOpen && (
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold truncate">Jane Doe</p>
+                <p className="text-[10px] text-white/40 font-medium uppercase tracking-wider truncate">Enterprise Admin</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto custom-scrollbar">
           {mainNavItems.map((item) => {
             const isActive = location.pathname === item.href || (item.href !== '/' && location.pathname.startsWith(item.href));
             return (
@@ -100,16 +120,8 @@ export function AppLayout() {
         </nav>
 
         <div className="p-4 border-t border-white/10">
-          <div className={cn("flex items-center gap-3 p-2 rounded-lg bg-white/5", !isSidebarOpen && "justify-center")}>
-            <div className="h-8 w-8 rounded-full bg-interaction-primary flex items-center justify-center text-xs font-bold">
-              JD
-            </div>
-            {isSidebarOpen && (
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold truncate">Jane Doe</p>
-                <p className="text-[10px] text-white/40 truncate">Enterprise Admin</p>
-              </div>
-            )}
+          <div className={cn("flex items-center gap-3 p-2 rounded-lg text-white/40 text-[10px] font-medium uppercase tracking-widest", !isSidebarOpen && "justify-center")}>
+            {isSidebarOpen ? "© 2026 Matrix360" : "M360"}
           </div>
         </div>
       </aside>
@@ -204,6 +216,24 @@ export function AppLayout() {
                 <button className="w-full mt-4 py-2 text-xs font-bold text-interaction-primary hover:bg-interaction-primary/5 rounded-lg transition-all">
                   View Full Network
                 </button>
+              </section>
+
+              <section>
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">Upcoming Meetings</h3>
+                <div className="space-y-3">
+                  {[
+                    { title: 'Strategy Sync: Project Alpha', time: 'Today, 2:00 PM', expert: 'Dr. Sarah Chen' },
+                    { title: 'AI Integration Workshop', time: 'Tomorrow, 10:00 AM', expert: 'Matrix AI' }
+                  ].map((meeting, i) => (
+                    <div key={i} className="p-3 rounded-lg bg-secondary-bg border border-border-light hover:border-interaction-primary/30 transition-all cursor-pointer">
+                      <p className="text-xs font-bold text-text-main mb-1">{meeting.title}</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-[10px] text-text-muted">{meeting.time}</p>
+                        <p className="text-[10px] text-interaction-primary font-medium">{meeting.expert}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </section>
 
               <section>
